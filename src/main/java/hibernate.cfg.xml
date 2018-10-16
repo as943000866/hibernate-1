@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	<!-- 数据库相关配置 -->
+    	<property name="connection.username">root</property>
+    	<property name="connection.password">123456</property>
+    	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    	<property name="connection.url">jdbc:mysql:///test</property>
+    	
+    	<!-- 配置 hibernate 的 mysql 方言  (事务支持的) -->
+    	<!-- 
+    		遇到问题 :
+    		<property name="hbm2ddl.auto">update</property> 配置无法自动创建表
+    		问题出现的原因:
+    		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+    		 支持低版本的 mysql,在高版本使用时无法自动创建表
+    		
+    		解决方法:org.hibernate.dialect.MySQLInnoDBDialect 改为 org.hibernate.dialect.MySQLDialect
+    		 
+    		-->
+    	
+    	<!--  支持较高版本的 mysql -->
+    	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    	
+    	<!-- 显示 sql -->
+    	<property name="show_sql">true</property>
+    	
+    	<!-- 格式化 sql -->
+    	<property name="format_sql">true</property>
+    	
+		<!-- 自动生成表
+		 	update 实体类的字段发生改变时,会在数据库表中增加新的字段,旧的字段和数据不会发生改变
+		  -->
+		<property name="hbm2ddl.auto">update</property>
+		
+		<!-- 配置实体类和关系映射文件的对应关系 -->
+		<mapping resource="com/lmg/hibernate_1/New.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
